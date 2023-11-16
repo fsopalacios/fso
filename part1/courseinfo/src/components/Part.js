@@ -1,7 +1,7 @@
 import React from 'react'
 
-export const Part = ({part, exercises}) => {
+export const Part = ({part}) => {
   return (
-    <p>{part} {exercises}</p>
+    <p>{part.name} {part.exercises}</p>
   )
 }
