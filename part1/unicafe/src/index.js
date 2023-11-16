@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { Statistics } from './components/Statistics';
+import { Button } from './components/Button';
 
 const App = () => {
   const [good, setGood] = useState(0)
@@ -24,9 +25,9 @@ const App = () => {
     <div>
       <h1>give feedback</h1>
       <div>
-        <button onClick={() => vote('good')}>good</button>
-        <button onClick={() => vote('newtral')}>newtral</button>
-        <button onClick={() => vote('bad')}>bad</button>
+        <Button vote={vote} type='good' />
+        <Button vote={vote} type='newtral' />
+        <Button vote={vote} type='bad' />
       </div>
       <Statistics good={good} newtral={newtral} bad={bad} />
     </div>
