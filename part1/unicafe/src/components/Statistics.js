@@ -10,12 +10,17 @@ export const Statistics = ({ good, newtral, bad }) => {
                 <p>No feedback given</p> 
             : 
                 <>
-                    <StatisticLine text='good' st={good}/>
-                    <StatisticLine text='newtral' st={newtral}/>
-                    <StatisticLine text='bad' st={bad}/>
-                    <StatisticLine text='all' st={good + newtral + bad}/>
-                    <StatisticLine text='average' st={(good-bad) / (good + newtral + bad)}/>
-                    <StatisticLine text='positive' st={(good * 100) / (good + newtral + bad)}/>
+                    <table>
+                        <tbody>
+                            <StatisticLine text='good' st={good}/>
+                            <StatisticLine text='newtral' st={newtral}/>
+                            <StatisticLine text='bad' st={bad}/>
+                            <StatisticLine text='all' st={good + newtral + bad}/>
+                            <StatisticLine text='average' st={(good-bad) / (good + newtral + bad)}/>
+                            <StatisticLine text='positive' st={(good * 100) / (good + newtral + bad)}/>
+                        </tbody>
+                    </table>
+                    
                 </>
         }
     </div>
