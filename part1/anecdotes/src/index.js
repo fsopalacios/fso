@@ -16,6 +16,8 @@ const votesArr = new Uint8Array(anecdotes.length)
 const App = (props) => {
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(props.votesArr)
+  const [mostVoted, setMostVoted] = useState(null)
+  const [maxVoted, setMaxVoted] = useState(null)
 
   const handleNext = () => {
     let next = Math.floor(Math.random() * anecdotes.length)
@@ -30,19 +32,41 @@ const App = (props) => {
     let newVotes = [...votes]
     newVotes[selected] += 1
     setVotes(newVotes)
+
+    let max = maxVoted ? maxVoted : 0
+    let most = mostVoted ? mostVoted : 0
+
+    for(let i = 0; i < newVotes.length; i++){
+      if(newVotes[i] > max){
+        most = i
+        max = newVotes[i]
+      }
+    }
+    setMostVoted(most)
+    setMaxVoted(max)
   }
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{props.anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p>
       <button onClick={vote}>vote</button>
       <button onClick={handleNext}>next anecdote</button>
+      {
+        mostVoted !== null 
+        ? 
+          <>
+            <h1>Anecdote with most votes</h1>
+            <p>{props.anecdotes[mostVoted]}</p>
+            <p>has {votes[mostVoted]} votes</p>
+          </>
+        : 
+          <p>No Votes</p>
+      }
     </div>
   )
 }
-
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
