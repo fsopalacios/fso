@@ -11,8 +11,11 @@ const anecdotes = [
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 
+const votesArr = new Uint8Array(anecdotes.length)
+
 const App = (props) => {
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(props.votesArr)
 
   const handleNext = () => {
     let next = Math.floor(Math.random() * anecdotes.length)
@@ -22,10 +25,18 @@ const App = (props) => {
       handleNext()
     }
   }
-  
+
+  const vote = () => {
+    let newVotes = [...votes]
+    newVotes[selected] += 1
+    setVotes(newVotes)
+  }
+
   return (
     <div>
       <p>{props.anecdotes[selected]}</p>
+      <p>has {votes[selected]} votes</p>
+      <button onClick={vote}>vote</button>
       <button onClick={handleNext}>next anecdote</button>
     </div>
   )
@@ -36,6 +47,6 @@ const App = (props) => {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App anecdotes={anecdotes}/>
+    <App anecdotes={anecdotes} votesArr={votesArr}/>
   </React.StrictMode>
 );
