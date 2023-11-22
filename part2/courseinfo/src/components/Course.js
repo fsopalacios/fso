@@ -2,12 +2,13 @@ import React from 'react'
 import { Header } from './Header'
 import Content from './Content'
 
-export const Course = ({course}) => {
+export const Course = ({courses}) => {
   return (
-    <>
-        <Header  course={course.name}/>
-        <Content parts={course.parts} />
-    </>
-    
+        courses.map(c => 
+          <div key={c.id}>
+          <Header  course={c.name}/>
+          <Content parts={c.parts} />
+          </div>
+        )
   )
 }
