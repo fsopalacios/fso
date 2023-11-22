@@ -10,10 +10,16 @@ const App = () => {
 
   const handleNew = (e) => {
     e.preventDefault()
-    let newPersons = [...persons]
-    newPersons.push({name: newName})
-    setPersons(newPersons)
-    document.getElementById('inputName').value=''
+    const exist = persons.filter(p => p.name === newName)
+    console.log(exist)
+    if(exist.length > 0){
+      alert(`${newName} already added to phonebook`)
+    } else {
+      let newPersons = [...persons]
+      newPersons.push({name: newName})
+      setPersons(newPersons)
+      document.getElementById('inputName').value=''
+    }
   }
   
   return (
