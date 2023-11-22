@@ -1,10 +1,7 @@
 import React from 'react'
 
 export const Total = ({parts}) => {
-    let totalExercises = 0
-    for(let i = 0; i < parts.length; i++){
-        totalExercises += parts[i].exercises
-    }
+    const totalExercises = parts.reduce((s, p) => s + p.exercises,0)
     return (
     <div>total of {totalExercises} exercises</div>
   )
