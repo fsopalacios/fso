@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import { Filter } from './components/Filter';
+import { PersonForm } from './components/PersonForm';
+import { PersonList } from './components/PersonList';
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -38,27 +41,11 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      filter shown with <input id="inputFilter" onChange={e => handleFilter(e.target.value)} />
+      <Filter handleFilter={handleFilter} />
       <h2>add a new</h2>
-      <form>
-        <div>
-          name: <input id='inputName' onChange={e => setNewName(e.target.value)} autoFocus/>
-        </div>
-        <div>
-          number: <input id='inputNumber' onChange={e => setNewNumber(e.target.value)} />
-        </div>
-        <div>
-          <button type="submit" onClick={handleNew}>add</button>
-        </div>
-      </form>
+      <PersonForm setNewName={setNewName} setNewNumber={setNewNumber} handleNew={handleNew} />
       <h2>Numbers</h2>
-      {
-        personsToShow 
-          ?
-            personsToShow.map(p => <p key={p.name}>{p.name} {p.number}</p>)
-          :
-            persons.map(p => <p key={p.name}>{p.name} {p.number}</p>)
-      }
+      <PersonList persons={persons} personsToShow={personsToShow} />
     </div>
   )
 }
