@@ -18,6 +18,11 @@ const App = () => {
     setCountryToShow(newList)
   }
 
+  const handleShow = (country) => {
+    const newList = countryList.filter(c => c.name.official.toLowerCase().includes(country.toLowerCase()))
+    setCountryToShow(newList)
+  }
+
   let languages
   if(countryToShow.length === 1) {
     languages = Object.values(countryToShow[0].languages)
@@ -56,7 +61,7 @@ const App = () => {
             ?
               <p>Too many matches, specify another filter</p>
             :
-            countryToShow.map(c => <p key={c.name.official}>{c.name.official}</p>)
+            countryToShow.map(c => <p key={c.name.official}>{c.name.official} <button onClick={() => handleShow(c.name.official)}>show</button></p>)
       } 
     </div>
   )
