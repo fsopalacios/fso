@@ -6,12 +6,15 @@ import axios from 'axios';
 const App = () => {
   const [countryList, SetCountryList] = useState([])
   const [countryToShow, setCountryToShow] = useState([])
+  const [weather, setWeather] = useState()
 
   useEffect(() => {
    axios
     .get('https://restcountries.com/v3.1/all')
     .then(response => SetCountryList(response.data))
   }, [])
+
+  const api_key = process.env.REACT_APP_API_KEY
 
   const handleFilter = (e) => {
     const newList = countryList.filter(c => c.name.official.toLowerCase().includes(e.target.value.toLowerCase()))
@@ -26,8 +29,13 @@ const App = () => {
   let languages
   if(countryToShow.length === 1) {
     languages = Object.values(countryToShow[0].languages)
+    if(!weather){
+     axios
+      .get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${countryToShow[0].capital[0]}`)
+      .then(response => setWeather(response.data)) 
+    }
   }
-  
+
   return (
     <div>
       find countries <input type='text' onChange={handleFilter}/>
@@ -51,6 +59,18 @@ const App = () => {
           }
           </ul>
           <img src={countryToShow[0].flags.png} alt={`${countryToShow[0].name.official} flag`}/>
+          {
+            !weather
+            ?
+              <p>Retrieving data...</p>
+            :
+            <>
+              <h3>Weather in {countryToShow[0].capital[0]}</h3>
+              <p><b>temperature: </b>{weather.current.temperature} Celsius</p>
+              <img src={weather.current.weather_icons} alt={`${countryToShow[0].capital[0]} weather`}/>
+              <p><b>wind: </b>{weather.current.wind_speed} direction {weather.current.wind_dir}</p>
+              </>
+          }
         </div>
         :
           countryToShow.length === 0
