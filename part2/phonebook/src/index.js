@@ -28,12 +28,17 @@ const App = () => {
       alert(`${newName} already added to phonebook`)
     } else {
       let newPersons = [...persons]
-      newPersons.push({name: newName, number: newNumber})
-      setPersons(newPersons)
-      document.getElementById('inputName').value=''
-      document.getElementById('inputNumber').value=''
-      setNewName('')
-      setNewNumber('')
+      axios.post('http://localhost:3001/persons', {name: newName, number: newNumber})
+      .then(response => {
+        newPersons.push({name: newName, number: newNumber})
+        setPersons(newPersons)
+        document.getElementById('inputName').value=''
+        document.getElementById('inputNumber').value=''
+        setNewName('')
+        setNewNumber('')
+      }
+      )
+      .catch(error => console.log('no creado'))
     }
   }
 
