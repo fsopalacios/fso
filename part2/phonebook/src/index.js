@@ -76,8 +76,18 @@ const App = () => {
       let prevFiltered = [...persons]
       const filtered = prevFiltered.filter(p => p.id !== id)
       setPersons(filtered)
+      setMessage(['success',`Erased`])
+            setTimeout(() => {
+              setMessage(null)
+              }, 3000);
     })
-    .catch(e => console.log(e))
+    .catch(e => {
+      console.log(e)
+      setMessage(['error',`Already deleted`])
+            setTimeout(() => {
+              setMessage(null)
+              }, 3000);
+    })
   }
   
   return (
