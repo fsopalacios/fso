@@ -11,6 +11,7 @@ const App = () => {
   const [personsToShow, setPersonsToShow] = useState(null)
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     personsService.getAll()
@@ -34,6 +35,10 @@ const App = () => {
               newPersons[i].number = newNumber
             }
             setPersons(newPersons)
+            setMessage(['success',`Updated ${newName}`])
+            setTimeout(() => {
+              setMessage(null)
+              }, 3000);
           }
         })
         .catch(e => console.log(e))
@@ -48,6 +53,10 @@ const App = () => {
         document.getElementById('inputNumber').value=''
         setNewName('')
         setNewNumber('')
+        setMessage(['success',`Added ${newName}`])
+        setTimeout(() => {
+          setMessage(null)
+        }, 3000);
       }
       )
       .catch(error => console.log('no creado'))
@@ -74,6 +83,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      {message ? <p className={message[0]}>{message[1]}</p> : <></>}
       <Filter handleFilter={handleFilter} />
       <h2>add a new</h2>
       <PersonForm setNewName={setNewName} setNewNumber={setNewNumber} handleNew={handleNew} />
