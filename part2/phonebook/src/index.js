@@ -47,6 +47,17 @@ const App = () => {
     const filtered = prevFiltered.filter(p => p.name.toLowerCase().includes(e.toLowerCase()))
     setPersonsToShow(filtered)
   }
+
+  const erase = (id) => {
+    console.log(id)
+    personsService.erase(id)
+    .then(r =>{
+      let prevFiltered = [...persons]
+      const filtered = prevFiltered.filter(p => p.id !== id)
+      setPersons(filtered)
+    })
+    .catch(e => console.log(e))
+  }
   
   return (
     <div>
@@ -55,7 +66,7 @@ const App = () => {
       <h2>add a new</h2>
       <PersonForm setNewName={setNewName} setNewNumber={setNewNumber} handleNew={handleNew} />
       <h2>Numbers</h2>
-      <PersonList persons={persons} personsToShow={personsToShow} />
+      <PersonList persons={persons} personsToShow={personsToShow} erase={erase}/>
     </div>
   )
 }
