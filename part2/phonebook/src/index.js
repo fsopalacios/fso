@@ -25,7 +25,19 @@ const App = () => {
     e.preventDefault()
     const exist = persons.filter(p => p.name === newName)
     if(exist.length > 0){
-      alert(`${newName} already added to phonebook`)
+      if(window.confirm(`${newName} already added to phonebook, update?`)){
+        personsService.update(exist[0].id, {name: newName, number: newNumber})
+        .then(response => {
+          let newPersons = [...persons]
+          for(let i = 0; i < newPersons.length; i++){
+            if(newPersons[i].name === newName){
+              newPersons[i].number = newNumber
+            }
+            setPersons(newPersons)
+          }
+        })
+        .catch(e => console.log(e))
+      }
     } else {
       let newPersons = [...persons]
       personsService.create({name: newName, number: newNumber})
