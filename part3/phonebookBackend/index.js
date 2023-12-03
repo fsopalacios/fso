@@ -51,10 +51,25 @@ app.get('/api/persons/:id', (req, res) => {
     res.json(phone)
 })
 
+app.post('/api/persons', (req, res) => {
+    const newPerson = (req.body)
+    const idGenerator = () => {
+        let id = Math.floor(Math.random() * 1000)
+        let filtered = phones.filter(p => p.id === id)
+        if(filtered.length > 0){
+            idGenerator()
+        } else {
+            newPerson.id = id
+            phones.push(newPerson)
+            res.json(newPerson)
+        }
+    }
+    idGenerator()
+})
+
 app.delete('/api/persons/:id', (req, res) => {
     const id = parseInt(req.params.id)
     phones = phones.filter(note => note.id !== id)
-  
     res.status(204).end()
   })
 
