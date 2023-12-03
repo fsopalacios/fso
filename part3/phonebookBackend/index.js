@@ -45,7 +45,11 @@ app.get('/api/persons', (req, res) => {
     res.json(phones)
 })
 
-const PORT = 8002
+app.get('/info', (req, res) => {
+    res.send(`Phonebook has info for ${phones.length} people<br/> ${new Date()}`)
+})
+
+const PORT = 3001
 app.listen(PORT, () => {
     console.log(`Server Running on PORT ${PORT}`)
 })
