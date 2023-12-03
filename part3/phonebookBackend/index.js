@@ -45,6 +45,12 @@ app.get('/api/persons', (req, res) => {
     res.json(phones)
 })
 
+app.get('/api/persons/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    const phone = phones.filter(p => p.id === id)
+    res.json(phone)
+})
+
 app.get('/info', (req, res) => {
     res.send(`Phonebook has info for ${phones.length} people<br/> ${new Date()}`)
 })
