@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 app.use(express.json())
-const phones = [
+let phones = [
     {
       "name": "Arto Hellas",
       "number": "040-123456",
@@ -50,6 +50,13 @@ app.get('/api/persons/:id', (req, res) => {
     const phone = phones.filter(p => p.id === id)
     res.json(phone)
 })
+
+app.delete('/api/persons/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    phones = phones.filter(note => note.id !== id)
+  
+    res.status(204).end()
+  })
 
 app.get('/info', (req, res) => {
     res.send(`Phonebook has info for ${phones.length} people<br/> ${new Date()}`)
